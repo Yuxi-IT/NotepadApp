@@ -21,6 +21,9 @@ namespace NotepadApp.Pages
             FontFamilyComboBox.SelectionChanged += FontFamilyComboBox_SelectionChanged;
             FontWeightComboBox.SelectionChanged += FontWeightComboBox_SelectionChanged;
             ClearConfigButton.Click += ClearConfigButton_Click;
+
+            LightThemeRadio.Checked += (s, e) => ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
+            DarkThemeRadio.Checked += (s, e) => ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
         }
 
         private void InitializeFontSettings()
@@ -74,5 +77,6 @@ namespace NotepadApp.Pages
             File.Delete(path);
             MessageBox.Show("配置文件已清空", "操作完成", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
     }
 }
