@@ -1,0 +1,71 @@
+﻿<Window x:Class="NotepadApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NotepadApp"
+        xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
+        xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        ui:WindowHelper.SystemBackdropType="Mica"
+        ui:ThemeManager.RequestedTheme="Default"
+        ui:TitleBar.Height="36"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="630" Width="861">
+    <Grid>
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="文件">
+                <MenuItem Header="新文件" Command="{Binding NewFileCommand}"/>
+                <MenuItem Header="打开" Command="{Binding OpenFileCommand}"/>
+                <MenuItem Header="保存" Command="{Binding SaveFileCommand}"/>
+                <Separator/>
+                <MenuItem Header="退出" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="编辑">
+                <MenuItem Header="撤销" Command="Undo"/>
+                <MenuItem Header="重做" Command="Redo"/>
+                <Separator/>
+                <MenuItem Header="剪切" Command="Cut"/>
+                <MenuItem Header="复制" Command="Copy"/>
+                <MenuItem Header="粘贴" Command="Paste"/>
+            </MenuItem>
+            <MenuItem HorizontalAlignment="Right" Click="NewTab_Click">
+                <MenuItem.Header>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Add}"/>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem HorizontalAlignment="Right" Click="Setting_Click">
+                <MenuItem.Header>
+                    <ui:FontIcon Icon="{x:Static ui:SegoeFluentIcons.Settings}"/>
+                </MenuItem.Header>
+            </MenuItem>
+        </Menu>
+        <Grid Margin="0,40,0,0">
+            <ui:NavigationView x:Name="TabList"
+                     IsPaneOpen="False"
+                     PaneDisplayMode="Auto"
+                     IsBackButtonVisible="Collapsed"
+                     SelectionChanged="TabList_SelectionChanged">
+                <ui:NavigationView.MenuItemContainerStyle>
+                    <Style TargetType="ui:NavigationViewItem">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="保存" 
+                                              Command="{Binding SaveTabCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                    <MenuItem Header="另存为" 
+                                              Command="{Binding SaveTabAsCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                    <Separator/>
+                                    <MenuItem Header="从列表删除" 
+                                              Command="{Binding CloseTabCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ui:NavigationView.MenuItemContainerStyle>
+                <Frame x:Name="MainFrame"
+               NavigationUIVisibility="Hidden"/>
+            </ui:NavigationView>
+        </Grid>
+    </Grid>
+</Window>
